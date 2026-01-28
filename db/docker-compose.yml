@@ -1,0 +1,20 @@
+# db/docker-compose.yml
+version: '3.8'
+services:
+  kisan-db:
+    image: postgis/postgis:15-3.3-alpine  # Lightweight & pre-installed PostGIS
+    container_name: kisan_setu_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: deep
+      POSTGRES_DB: kisan_setu
+    ports:
+      - "5432:5432"
+    volumes:
+      - kisan_data:/var/lib/postgresql/data
+      # Automatically runs scripts in this folder on first startup
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    restart: always
+
+volumes:
+  kisan_data:
